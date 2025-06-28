@@ -1,10 +1,11 @@
 import React from "react";
 import { assets } from "../assets/assets";
 import { ChevronDown, LogIn, ShieldCheck } from "lucide-react";
+import { JobCategories } from "../assets/assets";
 
 const Navbar = () => {
   return (
-    <div className="fixed top-3 left-1/2 transform -translate-x-1/2 w-[90%] max-w-7xl mx-auto rounded-full border border-gray-700 py-2 bg-light shadow-md z-50 font-semibold">
+    <div className="navbar">
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
         <img
           src={assets.logo}
@@ -29,34 +30,18 @@ const Navbar = () => {
               <ChevronDown className="transition-transform duration-300 group-hover:rotate-180" />
             </span>
 
-            <div
-              className="absolute left-0 top-full mt-2 w-52 font-normal bg-gray-900/70 border border-gray-700 rounded-xl shadow inset-shadow-xs shadow-pink-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-40"
-            >
+            <div className="dropdown-menu">
               <ul className="flex flex-col text-gray-300">
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-800 rounded-lg hover:text-white transition-colors"
-                  >
-                    Frontend Developer
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-800 rounded-lg hover:text-white transition-colors"
-                  >
-                    Backend Developer
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-800 rounded-lg hover:text-white transition-colors"
-                  >
-                    UI/UX Designer
-                  </a>
-                </li>
+                {JobCategories.map((category, index) => (
+                  <li key={index}>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-800 rounded-lg hover:text-white transition-colors"
+                    >
+                      {category}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </a>

@@ -8,3 +8,11 @@ body {
 .font-outfit {
     font-family: 'Outfit', sans-serif !important;
 }
+
+.navbar{
+    @apply fixed top-3 left-1/2 transform -translate-x-1/2 w-[90%] max-w-7xl mx-auto rounded-full border border-gray-700 py-2 shadow-md z-50 font-semibold
+}
+
+.dropdown-menu {
+    @apply absolute left-0 top-full mt-2 w-52 font-normal bg-gray-900/70 border border-gray-700 rounded-xl shadow inset-shadow-xs shadow-pink-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-40
+}
