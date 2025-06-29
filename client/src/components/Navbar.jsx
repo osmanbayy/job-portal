@@ -26,8 +26,7 @@ const Navbar = () => {
             Home
           </Link>
           {/* Menu Item with Dropdown */}
-          <Link
-            to="#"
+          <div
             className="relative group flex items-center gap-1 text-sm sm:text-base hover:text-gray-200 transition-colors"
           >
             <span className="flex items-center gap-1">
@@ -41,7 +40,7 @@ const Navbar = () => {
                   <li key={index}>
                     <Link
                       to="#"
-                      className="block px-4 py-2 hover:bg-gray-800 rounded-lg hover:text-white transition-colors"
+                      className="block px-4 py-2 hover:bg-gray-900 hover:tracking-wider rounded-lg hover:text-white transition-all"
                     >
                       {category}
                     </Link>
@@ -49,7 +48,7 @@ const Navbar = () => {
                 ))}
               </ul>
             </div>
-          </Link>
+          </div>
 
           <Link
             to="#"
