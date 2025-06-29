@@ -19,15 +19,15 @@ const Navbar = () => {
         />
 
         <div className="flex items-center gap-4 sm:gap-6 text-gray-300 font-outfit max-md:hidden">
-          <a
-            href="#"
+          <Link
+            to="#"
             className="hidden sm:inline-block text-sm sm:text-base hover:text-gray-500 transition-colors"
           >
             Home
-          </a>
+          </Link>
           {/* Menu Item with Dropdown */}
-          <a
-            href="#"
+          <Link
+            to="#"
             className="relative group flex items-center gap-1 text-sm sm:text-base hover:text-gray-200 transition-colors"
           >
             <span className="flex items-center gap-1">
@@ -39,30 +39,30 @@ const Navbar = () => {
               <ul className="flex flex-col text-gray-300">
                 {JobCategories.map((category, index) => (
                   <li key={index}>
-                    <a
-                      href="#"
+                    <Link
+                      to="#"
                       className="block px-4 py-2 hover:bg-gray-800 rounded-lg hover:text-white transition-colors"
                     >
                       {category}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
-          </a>
+          </Link>
 
-          <a
-            href="#"
+          <Link
+            to="#"
             className="hidden sm:inline-block text-sm sm:text-base hover:text-gray-500 transition-colors"
           >
             About Us
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="#"
             className="hidden sm:inline-block text-sm sm:text-base hover:text-gray-500 transition-colors"
           >
             Contact Us
-          </a>
+          </Link>
         </div>
 
         {user ? (
@@ -85,7 +85,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => openSignIn()}
-              className="flex items-center gap-3 bg-gray-800 hover:bg-transparent border border-transparent cursor-pointer hover:border-gray-700 transition-all text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full whitespace-nowrap"
+              className="flex items-center gap-3 bg-indigo-800 hover:bg-transparent border border-transparent cursor-pointer hover:border-gray-700 transition-all text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full whitespace-nowrap"
             >
               Login <LogIn className="size-4" />
             </button>

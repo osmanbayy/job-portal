@@ -3,11 +3,9 @@
 
 body {
     background-color: #090a15 !important;
-}
-
-.font-outfit {
     font-family: 'Outfit', sans-serif !important;
 }
+
 
 .navbar{
     @apply fixed top-3 left-1/2 transform -translate-x-1/2 w-[90%] max-w-7xl mx-auto rounded-full border border-gray-700 py-2 shadow-md z-50 font-semibold
