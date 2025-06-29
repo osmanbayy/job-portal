@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useContext, useRef } from "react";
 import { assets } from "../assets/assets";
+import { AppContext } from "../context/AppContext";
 
 const Hero = () => {
+  const { setSearchFilter, setIsSearched } = useContext(AppContext);
+
+  const jobTitleRef = useRef(null);
+  const jobLocationRef = useRef(null);
+
+  const handleSearch = () => {
+    setSearchFilter({
+      jobTitle: jobTitleRef.current.value,
+      jobLocation: jobLocationRef.current.value,
+    });
+    setIsSearched(true);
+  };
+
   return (
     <div className="pt-20 text-white container mx-auto w-[92%] max-w-7xl">
       <div className="bg-gradient-to-t from-gray-900 to-gray-950 py-16 text-center mx-2 rounded-xl border border-gray-800 px-3 sm:px-6 md:px-8 lg:px-10">
@@ -18,6 +32,7 @@ const Hero = () => {
             <img src={assets.search_icon} alt="search" className="h-4 sm:h-5" />
             <input
               type="text"
+              ref={jobTitleRef}
               placeholder="Search for jobs..."
               className="max-sm:text-xs p-2 rounded outline-none w-full placeholder:text-gray-400"
             />
@@ -30,11 +45,15 @@ const Hero = () => {
             />
             <input
               type="text"
+              ref={jobLocationRef}
               placeholder="Location"
               className="max-sm:text-xs p-2 rounded outline-none w-full placeholder:text-gray-400"
             />
           </div>
-          <button className="bg-indigo-800 px-6 py-2 rounded-xl m-1 cursor-pointer text-white border border-indigo-800 hover:bg-transparent hover:border-gray-800 transition-all">
+          <button
+            onClick={handleSearch}
+            className="bg-indigo-800 px-6 py-2 rounded-xl m-1 cursor-pointer text-white border border-indigo-800 hover:bg-transparent hover:border-gray-800 transition-all"
+          >
             Search
           </button>
         </div>
@@ -46,7 +65,11 @@ const Hero = () => {
           <p className="font-medium">Trusted By:</p>
           <img src={assets.microsoft_logo} alt="microsoft" className="h-6" />
           <img src={assets.walmart_logo} alt="walmart" className="h-6" />
-          <img src={assets.accenture_logo} alt="accenture" className="h-6 invert" />
+          <img
+            src={assets.accenture_logo}
+            alt="accenture"
+            className="h-6 invert"
+          />
           <img src={assets.samsung_logo} alt="samsung" className="h-6" />
           <img src={assets.amazon_logo} alt="amazon" className="h-6 invert" />
           <img src={assets.adobe_logo} alt="adobe" className="h-6" />
