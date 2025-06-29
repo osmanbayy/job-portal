@@ -60,7 +60,7 @@ const Hero = () => {
       </div>
 
       {/* Companies Logos */}
-      <div className="border border-gray-700 shadow-md mx-2 mt-5 p-6 rounded-xl flex justify-center">
+      <div className="border border-gray-700 shadow-md mx-2 mt-5 p-6 rounded-xl lg:rounded-full flex justify-center">
         <div className="flex justify-center gap-10 lg:gap-16 flex-wrap">
           <p className="font-medium">Trusted By:</p>
           <img src={assets.microsoft_logo} alt="microsoft" className="h-6" />

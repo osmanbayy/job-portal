@@ -10,7 +10,7 @@ const Navbar = () => {
   const { user } = useUser();
 
   return (
-    <div className="navbar">
+    <div className="navbar backdrop-blur-lg">
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
         <img
           src={assets.logo}
