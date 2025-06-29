@@ -34,7 +34,22 @@ const Hero = () => {
               className="max-sm:text-xs p-2 rounded outline-none w-full placeholder:text-gray-400"
             />
           </div>
-          <button className="bg-indigo-800 px-6 py-2 rounded-xl m-1 cursor-pointer text-white border border-indigo-800 hover:bg-transparent hover:border-gray-800 transition-all">Search</button>
+          <button className="bg-indigo-800 px-6 py-2 rounded-xl m-1 cursor-pointer text-white border border-indigo-800 hover:bg-transparent hover:border-gray-800 transition-all">
+            Search
+          </button>
+        </div>
+      </div>
+
+      {/* Companies Logos */}
+      <div className="border border-gray-700 shadow-md mx-2 mt-5 p-6 rounded-xl flex justify-center">
+        <div className="flex justify-center gap-10 lg:gap-16 flex-wrap">
+          <p className="font-medium">Trusted By:</p>
+          <img src={assets.microsoft_logo} alt="microsoft" className="h-6" />
+          <img src={assets.walmart_logo} alt="walmart" className="h-6" />
+          <img src={assets.accenture_logo} alt="accenture" className="h-6 invert" />
+          <img src={assets.samsung_logo} alt="samsung" className="h-6" />
+          <img src={assets.amazon_logo} alt="amazon" className="h-6 invert" />
+          <img src={assets.adobe_logo} alt="adobe" className="h-6" />
         </div>
       </div>
     </div>
