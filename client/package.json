@@ -13,6 +13,7 @@
     "@clerk/clerk-react": "^5.32.2",
     "@clerk/themes": "^2.2.52",
     "@tailwindcss/vite": "^4.1.11",
+    "framer-motion": "^12.20.5",
     "lucide-react": "^0.525.0",
     "quill": "^2.0.3",
     "react": "^19.1.0",

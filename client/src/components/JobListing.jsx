@@ -1,15 +1,14 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import {
-  assets,
-  JobCategories,
-  JobLocations,
-  jobsData,
-} from "../assets/assets";
+import { assets, JobCategories, JobLocations } from "../assets/assets";
 import JobCard from "./JobCard";
+import { ListFilter } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+// import { motion } from "motion/react"
 
 const JobListing = () => {
-  const { isSearched, searchFilter, setSearchFilter } = useContext(AppContext);
+  const { isSearched, searchFilter, setSearchFilter, jobs } =
+    useContext(AppContext);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const handleCategoryChange = (category) => {
@@ -19,6 +18,8 @@ const JobListing = () => {
         : [...prev, category]
     );
   };
+
+  const [showFilter, setShowFilter] = useState(false);
 
   return (
     <div className="text-white container mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8 max-w-7xl w-[90%]">
@@ -64,7 +65,62 @@ const JobListing = () => {
             </>
           )}
 
-        {/* Category Filter */}
+        <button
+          onClick={() => setShowFilter((prev) => !prev)}
+          className="flex items-center gap-3 px-4 py-1.5 rounded border border-gray-600 lg:hidden"
+        >
+          {showFilter ? "Close" : "Filters"}{" "}
+          {!showFilter && <ListFilter className="size-4" />}
+        </button>
+
+        {/* Category Filter (Mobile: Animated, Desktop: Static) */}
+        <div className="lg:hidden">
+          <AnimatePresence>
+            {showFilter && (
+              <motion.div
+                key="category-filter"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h4 className="font-medium text-lg py-4">Search by Categories</h4>
+                <ul className="space-y-4 text-gray-400">
+                  {JobCategories.map((category, index) => (
+                    <li key={index} className="mb-2">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="hidden"
+                          checked={selectedCategories.includes(category)}
+                          onChange={() => handleCategoryChange(category)}
+                        />
+                        <div
+                          className={`size-5 border rounded-sm flex items-center justify-center transition ${
+                            selectedCategories.includes(category)
+                              ? "border-indigo-400 bg-gray-400"
+                              : "border-gray-600 bg-gray-700"
+                          }`}
+                        >
+                          <img
+                            src={assets.tick_icon}
+                            alt="tick"
+                            className={`size-4 ${
+                              selectedCategories.includes(category)
+                                ? "opacity-100"
+                                : "opacity-0"
+                            }`}
+                          />
+                        </div>
+                        <span>{category}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
         <div className="max-lg:hidden">
           <h4 className="font-medium text-lg py-4">Search by Categories</h4>
           <ul className="space-y-4 text-gray-400">
@@ -101,7 +157,54 @@ const JobListing = () => {
           </ul>
         </div>
 
-        {/* Location Filter */}
+        {/* Location Filter (Mobile: Animated, Desktop: Static) */}
+        <div className="lg:hidden">
+          <AnimatePresence>
+            {showFilter && (
+              <motion.div
+                key="location-filter"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h4 className="font-medium text-lg py-4">Search by Location</h4>
+                <ul className="space-y-4 text-gray-400">
+                  {JobLocations.map((location, index) => (
+                    <li key={index} className="mb-2">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="hidden"
+                          checked={selectedCategories.includes(location)}
+                          onChange={() => handleCategoryChange(location)}
+                        />
+                        <div
+                          className={`size-5 border rounded-sm flex items-center justify-center transition ${
+                            selectedCategories.includes(location)
+                              ? "border-indigo-400 bg-gray-400"
+                              : "border-gray-600 bg-gray-700"
+                          }`}
+                        >
+                          <img
+                            src={assets.tick_icon}
+                            alt="tick"
+                            className={`size-4 ${
+                              selectedCategories.includes(location)
+                                ? "opacity-100"
+                                : "opacity-0"
+                            }`}
+                          />
+                        </div>
+                        <span>{location}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
         <div className="max-lg:hidden">
           <h4 className="font-medium text-lg py-4">Search by Location</h4>
           <ul className="space-y-4 text-gray-400">
@@ -148,7 +251,7 @@ const JobListing = () => {
 
         {/* Job Cards */}
         <div className="grid grid-cols-1 gap-2">
-          {jobsData.map((job, index) => (
+          {jobs.map((job, index) => (
             <JobCard key={index} job={job} />
           ))}
         </div>

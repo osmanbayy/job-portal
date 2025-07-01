@@ -68,13 +68,13 @@ const Navbar = () => {
           <div className="text-white/80 flex items-center gap-2 sm:gap-4 text-sm sm:text-base">
             <Link
               to="/applications"
-              className="flex items-center gap-2 sm:gap-4 text-sm sm:text-base invisible md:visible"
+              className="flex items-center gap-2 sm:gap-4 text-sm sm:text-base"
             >
               {" "}
               Applied Jobs
             </Link>
             <p className="invisible md:visible">|</p>
-            <p>Hi! {user.firstName}</p>
+            <p className="max-sm:hidden">Hi! {user.firstName}</p>
             <UserButton />
           </div>
         ) : (
