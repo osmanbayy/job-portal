@@ -1,21 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { assets, JobCategories, JobLocations } from "../assets/assets";
 import JobCard from "./JobCard";
 import { ListFilter } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-// import { motion } from "motion/react"
 
 const JobListing = () => {
   const { isSearched, searchFilter, setSearchFilter, jobs } =
     useContext(AppContext);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState(jobs);
 
   const handleCategoryChange = (category) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
         ? prev.filter((cat) => cat !== category)
         : [...prev, category]
+    );
+  };
+
+  const handleLocationChange = (location) => {
+    setSelectedLocations((prev) =>
+      prev.includes(location)
+        ? prev.filter((loc) => loc !== location)
+        : [...prev, location]
     );
   };
 
@@ -27,10 +36,42 @@ const JobListing = () => {
     setCurrentPage(page);
     const jobList = document.getElementById("job-list");
     if (jobList) {
-      const y = jobList.getBoundingClientRect().top + window.pageYOffset - NAVBAR_HEIGHT;
+      const y =
+        jobList.getBoundingClientRect().top +
+        window.pageYOffset -
+        NAVBAR_HEIGHT;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
+
+  useEffect(() => {
+    const matchesCategory = (job) => selectedCategories.length === 0 || selectedCategories.includes(job.category);
+    const matchesLocation = (job) => selectedLocations.length === 0 || selectedLocations.includes(job.location);
+
+    const matchesTitle = (job) =>
+      searchFilter.jobTitle === "" ||
+      job.title?.toLowerCase().includes(searchFilter.jobTitle?.toLowerCase());
+
+    const matchesSearchLocation = (job) =>
+      searchFilter.jobLocation === "" ||
+      job.location
+        ?.toLowerCase()
+        .includes(searchFilter.jobLocation?.toLowerCase());
+
+    const newFilteredJobs = jobs
+      .slice()
+      .reverse()
+      .filter(
+        (job) =>
+          matchesCategory(job) &&
+          matchesLocation(job) &&
+          matchesTitle(job) &&
+          matchesSearchLocation(job)
+      );
+
+    setFilteredJobs(newFilteredJobs);
+    setCurrentPage(1);
+  }, [jobs, selectedCategories, selectedLocations, searchFilter]);
 
   return (
     <div className="text-white container mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8 max-w-7xl w-[90%]">
@@ -111,7 +152,7 @@ const JobListing = () => {
                         <div
                           className={`size-5 border rounded-sm flex items-center justify-center transition ${
                             selectedCategories.includes(category)
-                              ? "border-indigo-400 bg-gray-400"
+                              ? "border-indigo-400 bg-gray-600"
                               : "border-gray-600 bg-gray-700"
                           }`}
                         >
@@ -149,7 +190,7 @@ const JobListing = () => {
                   <div
                     className={`size-5 border rounded-sm flex items-center justify-center transition ${
                       selectedCategories.includes(category)
-                        ? "border-indigo-400 bg-gray-400"
+                        ? "border-indigo-400 bg-gray-600"
                         : "border-gray-600 bg-gray-700"
                     }`}
                   >
@@ -163,7 +204,7 @@ const JobListing = () => {
                       }`}
                     />
                   </div>
-                  <span>{category}</span>
+                  <span className="transition-all hover:tracking-wide">{category}</span>
                 </label>
               </li>
             ))}
@@ -189,13 +230,13 @@ const JobListing = () => {
                         <input
                           type="checkbox"
                           className="hidden"
-                          checked={selectedCategories.includes(location)}
-                          onChange={() => handleCategoryChange(location)}
+                          checked={selectedLocations.includes(location)}
+                          onChange={() => handleLocationChange(location)}
                         />
                         <div
                           className={`size-5 border rounded-sm flex items-center justify-center transition ${
-                            selectedCategories.includes(location)
-                              ? "border-indigo-400 bg-gray-400"
+                            selectedLocations.includes(location)
+                              ? "border-indigo-400 bg-gray-600"
                               : "border-gray-600 bg-gray-700"
                           }`}
                         >
@@ -203,7 +244,7 @@ const JobListing = () => {
                             src={assets.tick_icon}
                             alt="tick"
                             className={`size-4 ${
-                              selectedCategories.includes(location)
+                              selectedLocations.includes(location)
                                 ? "opacity-100"
                                 : "opacity-0"
                             }`}
@@ -227,13 +268,13 @@ const JobListing = () => {
                   <input
                     type="checkbox"
                     className="hidden"
-                    checked={selectedCategories.includes(location)}
-                    onChange={() => handleCategoryChange(location)}
+                    checked={selectedLocations.includes(location)}
+                    onChange={() => handleLocationChange(location)}
                   />
                   <div
                     className={`size-5 border rounded-sm flex items-center justify-center transition ${
-                      selectedCategories.includes(location)
-                        ? "border-indigo-400 bg-gray-400"
+                      selectedLocations.includes(location)
+                        ? "border-indigo-400 bg-gray-600"
                         : "border-gray-600 bg-gray-700"
                     }`}
                   >
@@ -241,13 +282,13 @@ const JobListing = () => {
                       src={assets.tick_icon}
                       alt="tick"
                       className={`size-4 ${
-                        selectedCategories.includes(location)
+                        selectedLocations.includes(location)
                           ? "opacity-100"
                           : "opacity-0"
                       }`}
                     />
                   </div>
-                  <span>{location}</span>
+                  <span className="transition-all hover:tracking-wide">{location}</span>
                 </label>
               </li>
             ))}
@@ -264,15 +305,35 @@ const JobListing = () => {
 
         {/* Job Cards */}
         <div className="grid grid-cols-1 gap-2">
-          {jobs
-            .slice((currentPage - 1) * 6, currentPage * 6)
-            .map((job, index) => (
-              <JobCard key={index} job={job} />
-            ))}
+          <AnimatePresence mode="wait">
+            {filteredJobs.length > 0 ? (
+              filteredJobs
+                .slice((currentPage - 1) * 6, currentPage * 6)
+                .map((job, index) => (
+                  <motion.div
+                    key={`${job.id || index}-${currentPage}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{
+                      duration: 0.3,
+                      delay: index * 0.1,
+                      ease: "easeOut",
+                    }}
+                  >
+                    <JobCard job={job} />
+                  </motion.div>
+                ))
+            ) : (
+              <div className="text-xl px-4 py-2 bg-gray-800 rounded-xl">
+                No jobs were found matching your searches. 😢 <br />
+              </div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Pagination */}
-        {jobs.length > 0 && (
+        {filteredJobs.length > 0 && (
           <div className="flex items-center justify-center space-x-2 mt-10 text-white">
             <button
               onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
@@ -281,7 +342,7 @@ const JobListing = () => {
             >
               <img src={assets.left_arrow_icon} alt="left" />
             </button>
-            {Array.from({ length: Math.ceil(jobs.length / 6) }).map(
+            {Array.from({ length: Math.ceil(filteredJobs.length / 6) }).map(
               (_, index) => (
                 <button
                   key={index}
@@ -297,8 +358,12 @@ const JobListing = () => {
               )
             )}
             <button
-              onClick={() => handlePageChange(Math.min(Math.ceil(jobs.length / 6), currentPage + 1))}
-              disabled={currentPage === Math.ceil(jobs.length / 6)}
+              onClick={() =>
+                handlePageChange(
+                  Math.min(Math.ceil(filteredJobs.length / 6), currentPage + 1)
+                )
+              }
+              disabled={currentPage === Math.ceil(filteredJobs.length / 6)}
               className="disabled:opacity-50 disabled:cursor-not-allowed size-10 flex items-center justify-center border border-gray-700 hover:border-gray-500 transition rounded cursor-pointer"
             >
               <img src={assets.right_arrow_icon} alt="right" />
