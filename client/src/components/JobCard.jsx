@@ -15,7 +15,7 @@ const JobCard = ({ job }) => {
     }
   };
   return (
-    <div className="border bg-gradient-to-l from-gray-800 to-gray-950 border-transparent shadow-xs shadow-indigo-900 rounded p-6">
+    <div className="border bg-gradient-to-l from-gray-800 to-gray-950 border-transparent shadow-xs shadow-indigo-900 rounded-3xl p-6">
       <div className="flex justify-between items-center">
         <img src={assets.company_icon} alt="company" className="size-8" />
         <div className="flex items-center gap-2">
