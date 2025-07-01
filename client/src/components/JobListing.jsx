@@ -20,6 +20,17 @@ const JobListing = () => {
   };
 
   const [showFilter, setShowFilter] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const NAVBAR_HEIGHT = 88;
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    const jobList = document.getElementById("job-list");
+    if (jobList) {
+      const y = jobList.getBoundingClientRect().top + window.pageYOffset - NAVBAR_HEIGHT;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="text-white container mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8 max-w-7xl w-[90%]">
@@ -84,7 +95,9 @@ const JobListing = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                <h4 className="font-medium text-lg py-4">Search by Categories</h4>
+                <h4 className="font-medium text-lg py-4">
+                  Search by Categories
+                </h4>
                 <ul className="space-y-4 text-gray-400">
                   {JobCategories.map((category, index) => (
                     <li key={index} className="mb-2">
@@ -251,10 +264,47 @@ const JobListing = () => {
 
         {/* Job Cards */}
         <div className="grid grid-cols-1 gap-2">
-          {jobs.map((job, index) => (
-            <JobCard key={index} job={job} />
-          ))}
+          {jobs
+            .slice((currentPage - 1) * 6, currentPage * 6)
+            .map((job, index) => (
+              <JobCard key={index} job={job} />
+            ))}
         </div>
+
+        {/* Pagination */}
+        {jobs.length > 0 && (
+          <div className="flex items-center justify-center space-x-2 mt-10 text-white">
+            <button
+              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className="disabled:opacity-50 disabled:cursor-not-allowed size-10 flex items-center justify-center border border-gray-700 hover:border-gray-500 transition rounded cursor-pointer"
+            >
+              <img src={assets.left_arrow_icon} alt="left" />
+            </button>
+            {Array.from({ length: Math.ceil(jobs.length / 6) }).map(
+              (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`size-10 flex items-center justify-center border  rounded cursor-pointer transition ${
+                    currentPage === index + 1
+                      ? "bg-blue-700 border-white"
+                      : "text-gray-500 hover:border-gray-400 border-gray-600"
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+            <button
+              onClick={() => handlePageChange(Math.min(Math.ceil(jobs.length / 6), currentPage + 1))}
+              disabled={currentPage === Math.ceil(jobs.length / 6)}
+              className="disabled:opacity-50 disabled:cursor-not-allowed size-10 flex items-center justify-center border border-gray-700 hover:border-gray-500 transition rounded cursor-pointer"
+            >
+              <img src={assets.right_arrow_icon} alt="right" />
+            </button>
+          </div>
+        )}
       </section>
     </div>
   );
