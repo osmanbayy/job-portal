@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { EllipsisVertical, Heart } from "lucide-react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const JobCard = ({ job }) => {
   const [addFavorite, setAddFavorite] = useState(false);
@@ -14,6 +15,8 @@ const JobCard = ({ job }) => {
       toast.success("Job removed from favorites!");
     }
   };
+
+  const navigate = useNavigate();
   return (
     <div className="border bg-gradient-to-l from-gray-800 to-gray-950 border-transparent shadow-xs shadow-indigo-900 rounded-3xl p-6">
       <div className="flex justify-between items-center">
@@ -46,10 +49,22 @@ const JobCard = ({ job }) => {
       ></p>
 
       <div className="flex items-center mt-4 gap-4">
-        <button className="bg-blue-700 border border-blue-700 text-sm rounded-xl px-4 py-2 cursor-pointer hover:bg-transparent transition">
+        <button
+          onClick={() => {
+            navigate(`/apply-job/${job._id}`);
+            scrollTo(0, 0);
+          }}
+          className="bg-blue-700 border border-blue-700 text-sm rounded-xl px-4 py-2 cursor-pointer hover:bg-transparent transition"
+        >
           Apply Now
         </button>
-        <button className="bg-transparent text-sm rounded-xl px-4 py-2 cursor-pointer border border-gray-700 hover:border-blue-500 transition">
+        <button
+          onClick={() => {
+            navigate(`/apply-job/${job._id}`);
+            scrollTo(0, 0);
+          }}
+          className="bg-transparent text-sm rounded-xl px-4 py-2 cursor-pointer border border-gray-700 hover:border-blue-500 transition"
+        >
           Learn More
         </button>
       </div>

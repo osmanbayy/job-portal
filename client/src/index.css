@@ -6,11 +6,156 @@ body {
     font-family: 'Outfit', sans-serif !important;
 }
 
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+}
 
-.navbar{
+::-webkit-scrollbar {
+    display: none;
+}
+
+.navbar {
     @apply fixed top-3 left-1/2 transform -translate-x-1/2 w-[90%] max-w-7xl mx-auto rounded-full border border-gray-700 py-2 shadow-md z-50 font-semibold
 }
 
 .dropdown-menu {
     @apply absolute left-0 top-full mt-2 w-52 font-normal bg-gray-950 border border-gray-700 rounded-xl shadow inset-shadow-xs shadow-pink-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-40
+}
+
+.loader {
+    width: fit-content;
+    font-size: 40px;
+    font-family: monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #0e040400;
+    -webkit-text-stroke: 1px #6a6a6a;
+    --g: conic-gradient(#e6dcdc 0 0) no-repeat text;
+    background: var(--g) 0, var(--g) 1ch, var(--g) 2ch, var(--g) 3ch, var(--g) 4ch, var(--g) 5ch, var(--g) 6ch;
+    animation:
+        l18-0 2s linear infinite alternate,
+        l18-1 4s linear infinite;
+}
+
+.loader:before {
+    content: "Loading";
+}
+
+@keyframes l18-0 {
+    0% {
+        background-size: 1ch 0, 1ch 0, 1ch 0, 1ch 0, 1ch 0, 1ch 0, 1ch 0
+    }
+
+    14.28% {
+        background-size: 1ch 100%, 1ch 50%, 1ch 0, 1ch 0, 1ch 0, 1ch 0, 1ch 0
+    }
+
+    28.57% {
+        background-size: 1ch 100%, 1ch 100%, 1ch 50%, 1ch 0, 1ch 0, 1ch 0, 1ch 0
+    }
+
+    42.85% {
+        background-size: 1ch 100%, 1ch 100%, 1ch 100%, 1ch 50%, 1ch 0, 1ch 0, 1ch 0
+    }
+
+    57.14% {
+        background-size: 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 50%, 1ch 0, 1ch 0
+    }
+
+    71.43% {
+        background-size: 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 50%, 1ch 0
+    }
+
+    85.71% {
+        background-size: 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 50%
+    }
+
+    100% {
+        background-size: 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%, 1ch 100%
+    }
+}
+
+@keyframes l18-1 {
+
+    0%,
+    50% {
+        background-position-y: 100%
+    }
+
+    50.01%,
+    to {
+        background-position-y: 0
+    }
+}
+
+/* Custom css for job description */
+.rich-text {
+    font-size: 15px;
+    color: #969696;
+}
+
+.rich-text p {
+    margin-bottom: 16px;
+}
+
+.rich-text h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #e6e6e6;
+}
+
+.rich-text h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e6e6e6;
+    margin-bottom: 15px;
+}
+
+.rich-text h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.rich-text h4 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ddd;
+    margin-bottom: 10px;
+}
+
+.rich-text h5 {
+    font-size: 14px;
+    font-weight: 400;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.rich-text h6 {
+    font-size: 12px;
+    font-weight: 300;
+    color: #bbb;
+    margin-bottom: 10px;
+}
+
+.rich-text strong {
+    font-weight: 700;
+}
+
+.rich-text ol {
+    margin-left: 30px;
+    list-style-type: decimal;
+    margin-bottom: 20px;
+}
+
+.rich-text ul {
+    margin-left: 30px;
+    list-style-type: disc;
+}
+
+.rich-text li {
+    margin-bottom: 8px;
 }

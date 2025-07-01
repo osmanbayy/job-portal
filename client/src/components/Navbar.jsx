@@ -3,9 +3,10 @@ import { assets } from "../assets/assets";
 import { ChevronDown, LogIn, ShieldCheck } from "lucide-react";
 import { JobCategories } from "../assets/assets";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { openSignIn } = useClerk();
   const { user } = useUser();
 
@@ -13,6 +14,7 @@ const Navbar = () => {
     <div className="navbar backdrop-blur-lg">
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
         <img
+        onClick={() => {navigate("/"); scrollTo(0, 0)}}
           src={assets.logo}
           alt="logo"
           className="invert h-6 sm:h-8 cursor-pointer hover:invert-75 transition-all"
@@ -20,7 +22,8 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4 sm:gap-6 text-gray-300 font-outfit max-md:hidden">
           <Link
-            to="#"
+            to="/"
+            onClick={() => scrollTo(0, 0)}
             className="hidden sm:inline-block text-sm sm:text-base hover:text-gray-500 transition-colors"
           >
             Home
@@ -51,13 +54,13 @@ const Navbar = () => {
           </div>
 
           <Link
-            to="#"
+            to="/about"
             className="hidden sm:inline-block text-sm sm:text-base hover:text-gray-500 transition-colors"
           >
             About Us
           </Link>
           <Link
-            to="#"
+            to="/contact"
             className="hidden sm:inline-block text-sm sm:text-base hover:text-gray-500 transition-colors"
           >
             Contact Us
