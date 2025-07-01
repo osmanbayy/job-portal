@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 const JobCard = ({ job }) => {
   const [addFavorite, setAddFavorite] = useState(false);
 
-  const handleFavoriteClick = () => {
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation()
     setAddFavorite((prev) => !prev);
     if (!addFavorite) {
       toast.success("Job added to favorites!");
@@ -18,7 +19,13 @@ const JobCard = ({ job }) => {
 
   const navigate = useNavigate();
   return (
-    <div className="border bg-gradient-to-l from-gray-800 to-gray-950 border-transparent shadow-xs shadow-indigo-900 rounded-3xl p-6">
+    <div
+      onClick={() => {
+        navigate(`/apply-job/${job._id}`);
+        scrollTo(0, 0);
+      }}
+      className="border bg-gradient-to-l from-gray-800 to-gray-950 border-transparent shadow-xs shadow-indigo-900 rounded-3xl p-6 transition-all duration-300 hover:border-gray-400 cursor-pointer"
+    >
       <div className="flex justify-between items-center">
         <img src={assets.company_icon} alt="company" className="size-8" />
         <div className="flex items-center gap-2">
