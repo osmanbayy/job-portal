@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { assets, jobsApplied } from "../assets/assets";
 import moment from "moment";
 import { Check, Loader, X } from "lucide-react";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+import { motion } from "framer-motion";
 
 const Applications = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -14,7 +15,16 @@ const Applications = () => {
     <>
       <Navbar />
 
-      <div className="text-white pt-20 lg:pt-25 container min-h-[80vh] max-w-7xl w-[90%] my-10 mx-auto px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.6,
+          ease: "easeOut",
+          delay: 0.2,
+        }}
+        className="text-white pt-20 lg:pt-25 container min-h-[80vh] max-w-7xl w-[90%] my-10 mx-auto px-4"
+      >
         <h2 className="text-xl font-semibold">Your Resume</h2>
         <div className="flex gap-2 mb-6 mt-3">
           {isEdit ? (
@@ -65,11 +75,21 @@ const Applications = () => {
         <table className="min-w-full bg-gray-900 rounded-xl max-sm:text-sm">
           <thead>
             <tr>
-              <th className="py-3 px-4 border-b border-gray-950 text-left">Company</th>
-              <th className="py-3 px-4 border-b border-gray-950 text-left">Job Title</th>
-              <th className="py-3 px-4 border-b border-gray-950 text-left max-sm:hidden">Location</th>
-              <th className="py-3 px-4 border-b border-gray-950 text-left max-sm:hidden">Date</th>
-              <th className="py-3 px-4 border-b border-gray-950 text-left">Status</th>
+              <th className="py-3 px-4 border-b border-gray-950 text-left">
+                Company
+              </th>
+              <th className="py-3 px-4 border-b border-gray-950 text-left">
+                Job Title
+              </th>
+              <th className="py-3 px-4 border-b border-gray-950 text-left max-sm:hidden">
+                Location
+              </th>
+              <th className="py-3 px-4 border-b border-gray-950 text-left max-sm:hidden">
+                Date
+              </th>
+              <th className="py-3 px-4 border-b border-gray-950 text-left">
+                Status
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -77,17 +97,42 @@ const Applications = () => {
               true ? (
                 <tr key={index}>
                   <td className="py-2 px-4 flex items-center gap-2 border-b border-gray-950">
-                    <img src={job.logo} alt="company logo" className="w-8 h-8" />
+                    <img
+                      src={job.logo}
+                      alt="company logo"
+                      className="w-8 h-8"
+                    />
                     {job.company}
                   </td>
-                  <td className="py-2 px-4 border-b border-gray-950 max-sm:text-xs">{job.title}</td>
-                  <td className="py-2 px-4 border-b border-gray-950 max-sm:hidden">{job.location}</td>
-                  <td className="py-2 px-4 border-b border-gray-950 max-sm:hidden">{moment(job.date).format("ll")}</td>
+                  <td className="py-2 px-4 border-b border-gray-950 max-sm:text-xs">
+                    {job.title}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-950 max-sm:hidden">
+                    {job.location}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-950 max-sm:hidden">
+                    {moment(job.date).format("ll")}
+                  </td>
                   <td className="py-2 px-4 border-b border-gray-950">
-                    <span className={`${job.status === "Accepted" ? "bg-green-500/70" : job.status === "Rejected" ? "bg-red-500/70" : "bg-blue-500/70"} px-4 py-1.5 rounded-lg lg:w-2/3 w-full flex gap-2 items-center `}>
+                    <span
+                      className={`${
+                        job.status === "Accepted"
+                          ? "bg-green-500/70"
+                          : job.status === "Rejected"
+                          ? "bg-red-500/70"
+                          : "bg-blue-500/70"
+                      } px-4 py-1.5 rounded-lg lg:w-2/3 w-full flex gap-2 items-center `}
+                    >
                       <span className="max-lg:hidden">
-                        {job.status === "Pending" ? <Loader /> : job.status === "Accepted" ? <Check /> : <X />}
-                      </span> {job.status}
+                        {job.status === "Pending" ? (
+                          <Loader />
+                        ) : job.status === "Accepted" ? (
+                          <Check />
+                        ) : (
+                          <X />
+                        )}
+                      </span>{" "}
+                      {job.status}
                     </span>
                   </td>
                 </tr>
@@ -95,7 +140,7 @@ const Applications = () => {
             )}
           </tbody>
         </table>
-      </div>
+      </motion.div>
       <Footer />
     </>
   );
