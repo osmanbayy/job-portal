@@ -7,6 +7,10 @@ import { Toaster } from "react-hot-toast";
 import { Check, X } from "lucide-react";
 import RecruiterLogin from "./components/RecruiterLogin";
 import { AppContext } from "./context/AppContext";
+import Dashboard from "./pages/admin_pages/Dashboard";
+import AddJob from "./pages/admin_pages/AddJob";
+import ManageJobs from "./pages/admin_pages/ManageJobs"
+import ViewApplications from "./pages/admin_pages/ViewApplications";
 
 const App = () => {
   const { showRecruiterLogin } = useContext(AppContext);
@@ -45,6 +49,12 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/apply-job/:id" element={<ApplyJob />} />
         <Route path="/applications" element={<Applications />} />
+
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="add-job" element={<AddJob />} />
+          <Route path="manage-jobs" element={<ManageJobs />} />
+          <Route path="view-applications" element={<ViewApplications />} />
+        </Route>
       </Routes>
     </div>
   );
