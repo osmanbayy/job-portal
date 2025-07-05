@@ -1,7 +1,9 @@
+import "./config/instrument.js"
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDatabase from "./config/database.js";
+import * as Sentry from "@sentry/node";
 
 // Initialize express
 const app = express();
@@ -17,9 +19,14 @@ app.use(express.json());
 app.get("/", (request, response) => {
   response.send("API Working");
 });
+app.get("/debug-sentry", function mainHandler(req, res) {
+  throw new Error("My first Sentry error!");
+});
 
 // Port
 const PORT = process.env.PORT || 5000;
+
+Sentry.setupExpressErrorHandler(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT} port.`);
