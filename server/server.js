@@ -5,6 +5,7 @@ import "dotenv/config";
 import connectDatabase from "./config/database.js";
 import * as Sentry from "@sentry/node";
 import { clerkWebhooks } from "./controllers/webhooks.js";
+import company_routes from "./routes/company_routes.js"
 
 // Initialize express
 const app = express();
@@ -23,7 +24,8 @@ app.get("/", (request, response) => {
 app.get("/debug-sentry", function mainHandler(req, res) {
   throw new Error("My first Sentry error!");
 });
-app.post("/webhooks", clerkWebhooks)
+app.post("/webhooks", clerkWebhooks);
+app.use("/api/company", company_routes);
 
 // Port
 const PORT = process.env.PORT || 5000;
