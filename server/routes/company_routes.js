@@ -1,10 +1,11 @@
 import express from "express";
 import { change_job_applications_status, change_visibility, get_company_data, get_company_job_applicants, get_company_posted_jobs, login_company, post_job, register_company } from "../controllers/company_controller.js";
+import upload from "../config/multer.js";
 
 const router = express.Router();
 
 // Register a company
-router.post("/register", register_company);
+router.post("/register", upload.single("image"), register_company);
 
 // Company login
 router.post("/login", login_company);

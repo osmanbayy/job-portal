@@ -2,16 +2,18 @@ import "./config/instrument.js"
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import connectDatabase from "./config/database.js";
+import connect_database from "./config/database.js";
 import * as Sentry from "@sentry/node";
 import { clerkWebhooks } from "./controllers/webhooks.js";
 import company_routes from "./routes/company_routes.js"
+import connect_cloudinary from "./config/cloudinary.js";
 
 // Initialize express
 const app = express();
 
 // Connect to database
-await connectDatabase()
+await connect_database()
+await connect_cloudinary();
 
 // Middlewares
 app.use(cors());

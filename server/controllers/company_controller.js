@@ -1,6 +1,48 @@
+import Company from "../models/Company.js"
+import bcrypt from "bcrypt";
+import { v2 as cloudinary } from "cloudinary";
+import generate_token from "../utils/generate_token.js";
+
 // Register a new company
 export const register_company = async (request, response) => {
+  const { name, email, password } = request.body;
+  const image_file = request.file;
 
+  if (!name || !email || !password || !image_file) {
+    return response.json({ success: false, message: "Missing Details!" });
+  }
+
+  try {
+    const companyAlreadyExist = await Company.findOne({ email })
+    if (companyAlreadyExist) {
+      return response.json({ success: false, message: "Company is already exist!" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const image_upload = await cloudinary.uploader.upload(image_file.path);
+
+    const company = await Company.create({
+      name,
+      email,
+      password: hashedPassword,
+      image: image_upload.secure_url
+    });
+
+    response.json({
+      success: true, company: {
+        _id: company._id,
+        name: company.name,
+        email: company.email,
+        image: company.image
+      },
+      token: generate_token(company._id)
+    })
+  } catch (error) {
+    console.log("Error in register_company controller");
+    response.json({ success: false, message: error.message });
+  }
 }
 
 // Company login
