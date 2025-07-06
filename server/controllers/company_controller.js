@@ -47,8 +47,37 @@ export const register_company = async (request, response) => {
 
 // Company login
 export const login_company = async (request, response) => {
+  const { email, password } = request.body;
 
-}
+  try {
+    const company = await Company.findOne({ email });
+
+    if (!company) {
+      return response.json({ success: false, message: "Invalid email or password!" });
+    }
+
+    const isMatch = await bcrypt.compare(password, company.password);
+    if (!isMatch) {
+      return response.json({ success: false, message: "Invalid email or password!" });
+    }
+
+    response.json({
+      success: true,
+      company: {
+        _id: company._id,
+        name: company.name,
+        email: company.email,
+        image: company.image,
+      },
+      token: generate_token(company._id),
+    });
+
+  } catch (error) {
+    console.error("Error in login_company controller:", error);
+    response.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
 
 // Get company data
 export const get_company_data = async (request, response) => {
