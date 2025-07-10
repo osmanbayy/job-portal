@@ -1,4 +1,5 @@
 import Company from "../models/Company.js"
+import Job from "../models/Job.js"
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import generate_token from "../utils/generate_token.js";
@@ -86,7 +87,32 @@ export const get_company_data = async (request, response) => {
 
 // Post a new job
 export const post_job = async (request, response) => {
+  const { title, description, location, salary, level, category } = request.body;
+  const company_id = request.company._id;
 
+  if (!title || !description || !location || salary || !level) {
+    return response.json({ success: false, message: "All Fields Required!" });
+  }
+
+  try {
+    const new_job = new Job({
+      title,
+      description,
+      location,
+      salary,
+      companyId: company_id,
+      date: Date.now(),
+      level,
+      category
+    });
+
+    await new_job.save();
+
+    response.json({ success: true, new_job });
+  } catch (error) {
+    console.log("Error in post_job controller");
+    response.json({ success: false, message: error.message });
+  }
 }
 
 // Get company job applicants
