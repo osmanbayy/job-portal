@@ -33,13 +33,13 @@ const RecruiterLogin = () => {
         ease: "easeOut",
         delay: 0.2,
       }}
-      className="absolute inset-0 z-10 backdrop-blur-xl bg-black/3 flex justify-center items-center"
+      className="absolute inset-0 z-10 backdrop-blur-xl dark:bg-black/3 bg-white/1 flex justify-center items-center"
     >
       <form
         onSubmit={onSubmitHandler}
-        className="flex flex-col relative bg-gradient-to-t from-gray-900 to-gray-950 p-10 rounded-xl text-slate-300 border border-gray-700"
+        className="flex flex-col relative bg-gradient-to-t dark:from-gray-900 from-zinc-100 to-zinc-200 dark:to-gray-950 p-10 rounded-xl dark:text-slate-300 border border-gray-400 dark:border-gray-700"
       >
-        <h1 className="text-center text-2xl text-neutral-300 font-medium">
+        <h1 className="text-center text-2xl dark:text-neutral-300 font-medium">
           Recruiter {state}
         </h1>
         <p className="text-sm">Welcome back! Please sign in to continue.</p>
@@ -67,8 +67,8 @@ const RecruiterLogin = () => {
         ) : (
           <>
             {state !== "Login" && (
-              <div className="border border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-                <img src={assets.person_icon} alt="person" className="size-4" />
+              <div className="border border-gray-400 dark:border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
+                <img src={assets.person_icon} alt="person" className="size-4 invert dark:invert-0" />
                 <input
                   type="text"
                   value={name}
@@ -80,8 +80,8 @@ const RecruiterLogin = () => {
               </div>
             )}
 
-            <div className="border border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-              <img src={assets.email_icon} alt="email" className="size-4" />
+            <div className="border border-gray-400 dark:border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
+              <img src={assets.email_icon} alt="email" className="size-4 invert dark:invert-0" />
               <input
                 type="email"
                 value={email}
@@ -91,8 +91,8 @@ const RecruiterLogin = () => {
                 className="outline-none text-sm"
               />
             </div>
-            <div className="relative border border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-              <img src={assets.lock_icon} alt="lock" className="size-4" />
+            <div className="relative border border-gray-400 dark:border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
+              <img src={assets.lock_icon} alt="lock" className="size-4 dark:invert-0" />
               <div className="">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -126,7 +126,7 @@ const RecruiterLogin = () => {
 
         <button
           type="submit"
-          className="bg-blue-700 w-full border border-blue-700 py-2 mt-4 text-white rounded-full cursor-pointer transition duration-300 hover:bg-transparent"
+          className="bg-blue-700 w-full border border-blue-700 py-2 mt-4 text-white rounded-full cursor-pointer transition duration-300 hover:bg-transparent dark:hover:text-white hover:text-black"
         >
           {state === "Login"
             ? "Sign In"

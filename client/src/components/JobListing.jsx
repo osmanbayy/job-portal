@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { assets, JobCategories, JobLocations } from "../assets/assets";
@@ -45,8 +46,12 @@ const JobListing = () => {
   };
 
   useEffect(() => {
-    const matchesCategory = (job) => selectedCategories.length === 0 || selectedCategories.includes(job.category);
-    const matchesLocation = (job) => selectedLocations.length === 0 || selectedLocations.includes(job.location);
+    const matchesCategory = (job) =>
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(job.category);
+    const matchesLocation = (job) =>
+      selectedLocations.length === 0 ||
+      selectedLocations.includes(job.location);
 
     const matchesTitle = (job) =>
       searchFilter.jobTitle === "" ||
@@ -74,7 +79,7 @@ const JobListing = () => {
   }, [jobs, selectedCategories, selectedLocations, searchFilter]);
 
   return (
-    <div className="text-white container mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8 max-w-7xl w-[90%]">
+    <div className="dark:text-white container mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8 max-w-7xl w-[90%]">
       {/* Sidebar */}
       <div className="w-full lg:w-1/4 bg-transparent px-4">
         {/* Search Filter from Hero Component */}
@@ -83,9 +88,9 @@ const JobListing = () => {
             <>
               <h3 className="font-medium text-lg mb-4">Current Search</h3>
 
-              <div className="mb-4 text-gray-300 flex flex-wrap gap-2">
+              <div className="mb-4 dark:text-gray-300 flex flex-wrap gap-2">
                 {searchFilter.jobTitle && (
-                  <span className="inline-flex items-center gap-2.5 bg-gray-800 px-3 py-1 rounded-full text-sm border border-gray-600">
+                  <span className="inline-flex items-center gap-2.5 dark:bg-gray-800 bg-gray-200 px-3 py-1 rounded-full text-sm border dark:border-gray-600 border-gray-600">
                     {searchFilter.jobTitle}
                     <img
                       onClick={() =>
@@ -93,12 +98,12 @@ const JobListing = () => {
                       }
                       src={assets.cross_icon}
                       alt=""
-                      className="cursor-pointer invert"
+                      className="cursor-pointer dark:invert"
                     />
                   </span>
                 )}
                 {searchFilter.jobLocation && (
-                  <span className="inline-flex items-center gap-2.5 bg-gray-800 px-3 py-1 rounded-full text-sm border border-gray-600">
+                  <span className="inline-flex items-center gap-2.5 dark:bg-gray-800 bg-gray-200 px-3 py-1 rounded-full text-sm border dark:border-gray-600 border-gray-600">
                     {searchFilter.jobLocation}
                     <img
                       onClick={() =>
@@ -109,7 +114,7 @@ const JobListing = () => {
                       }
                       src={assets.cross_icon}
                       alt=""
-                      className="cursor-pointer invert"
+                      className="cursor-pointer dark:invert"
                     />
                   </span>
                 )}
@@ -139,7 +144,7 @@ const JobListing = () => {
                 <h4 className="font-medium text-lg py-4">
                   Search by Categories
                 </h4>
-                <ul className="space-y-4 text-gray-400">
+                <ul className="space-y-4 dark:text-gray-400">
                   {JobCategories.map((category, index) => (
                     <li key={index} className="mb-2">
                       <label className="flex items-center gap-2 cursor-pointer">
@@ -152,8 +157,8 @@ const JobListing = () => {
                         <div
                           className={`size-5 border rounded-sm flex items-center justify-center transition ${
                             selectedCategories.includes(category)
-                              ? "border-indigo-400 bg-gray-600"
-                              : "border-gray-600 bg-gray-700"
+                              ? "border-indigo-400 dark:bg-gray-600 bg-gray-200"
+                              : "border-gray-600 dark:bg-gray-700 bg-gray-300"
                           }`}
                         >
                           <img
@@ -177,7 +182,7 @@ const JobListing = () => {
         </div>
         <div className="max-lg:hidden">
           <h4 className="font-medium text-lg py-4">Search by Categories</h4>
-          <ul className="space-y-4 text-gray-400">
+          <ul className="space-y-4 text-black/70 dark:text-gray-400">
             {JobCategories.map((category, index) => (
               <li key={index} className="mb-2">
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -190,21 +195,23 @@ const JobListing = () => {
                   <div
                     className={`size-5 border rounded-sm flex items-center justify-center transition ${
                       selectedCategories.includes(category)
-                        ? "border-indigo-400 bg-gray-600"
-                        : "border-gray-600 bg-gray-700"
+                        ? "border-indigo-400 dark:bg-gray-600 bg-gray-100"
+                        : "border-gray-600 dark:bg-gray-700 bg-gray-300"
                     }`}
                   >
                     <img
                       src={assets.tick_icon}
                       alt="tick"
-                      className={`size-4 ${
+                      className={`size-5 invert dark:invert-0 ${
                         selectedCategories.includes(category)
                           ? "opacity-100"
                           : "opacity-0"
                       }`}
                     />
                   </div>
-                  <span className="transition-all hover:tracking-wide">{category}</span>
+                  <span className="transition-all hover:tracking-wide">
+                    {category}
+                  </span>
                 </label>
               </li>
             ))}
@@ -223,7 +230,7 @@ const JobListing = () => {
                 transition={{ duration: 0.3 }}
               >
                 <h4 className="font-medium text-lg py-4">Search by Location</h4>
-                <ul className="space-y-4 text-gray-400">
+                <ul className="space-y-4 text-black/70 dark:text-gray-400">
                   {JobLocations.map((location, index) => (
                     <li key={index} className="mb-2">
                       <label className="flex items-center gap-2 cursor-pointer">
@@ -235,15 +242,15 @@ const JobListing = () => {
                         />
                         <div
                           className={`size-5 border rounded-sm flex items-center justify-center transition ${
-                            selectedLocations.includes(location)
-                              ? "border-indigo-400 bg-gray-600"
-                              : "border-gray-600 bg-gray-700"
+                            selectedCategories.includes(location)
+                              ? "border-indigo-400 dark:bg-gray-600 bg-gray-100"
+                              : "border-gray-600 dark:bg-gray-700 bg-gray-300"
                           }`}
                         >
                           <img
                             src={assets.tick_icon}
                             alt="tick"
-                            className={`size-4 ${
+                            className={`size-5 invert dark:invert-0 ${
                               selectedLocations.includes(location)
                                 ? "opacity-100"
                                 : "opacity-0"
@@ -261,7 +268,7 @@ const JobListing = () => {
         </div>
         <div className="max-lg:hidden">
           <h4 className="font-medium text-lg py-4">Search by Location</h4>
-          <ul className="space-y-4 text-gray-400">
+          <ul className="space-y-4 dark:text-gray-400 text-black/70">
             {JobLocations.map((location, index) => (
               <li key={index} className="mb-2">
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -274,21 +281,23 @@ const JobListing = () => {
                   <div
                     className={`size-5 border rounded-sm flex items-center justify-center transition ${
                       selectedLocations.includes(location)
-                        ? "border-indigo-400 bg-gray-600"
-                        : "border-gray-600 bg-gray-700"
+                        ? "border-indigo-400 dark:bg-gray-600 bg-gray-100"
+                        : "border-gray-600 dark:bg-gray-700 bg-gray-300"
                     }`}
                   >
                     <img
                       src={assets.tick_icon}
                       alt="tick"
-                      className={`size-4 ${
+                      className={`size-4 invert dark:invert-0 ${
                         selectedLocations.includes(location)
                           ? "opacity-100"
                           : "opacity-0"
                       }`}
                     />
                   </div>
-                  <span className="transition-all hover:tracking-wide">{location}</span>
+                  <span className="transition-all hover:tracking-wide">
+                    {location}
+                  </span>
                 </label>
               </li>
             ))}
@@ -338,7 +347,7 @@ const JobListing = () => {
             <button
               onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
-              className="disabled:opacity-50 disabled:cursor-not-allowed size-10 flex items-center justify-center border border-gray-700 hover:border-gray-500 transition rounded cursor-pointer"
+              className="disabled:opacity-50 disabled:cursor-not-allowed size-10 flex items-center justify-center border border-gray-300 dark:border-gray-700 dark:hover:border-gray-500 transition rounded cursor-pointer"
             >
               <img src={assets.left_arrow_icon} alt="left" />
             </button>

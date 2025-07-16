@@ -9,14 +9,20 @@ import RecruiterLogin from "./components/RecruiterLogin";
 import { AppContext } from "./context/AppContext";
 import Dashboard from "./pages/admin_pages/Dashboard";
 import AddJob from "./pages/admin_pages/AddJob";
-import ManageJobs from "./pages/admin_pages/ManageJobs"
+import ManageJobs from "./pages/admin_pages/ManageJobs";
 import ViewApplications from "./pages/admin_pages/ViewApplications";
-import "quill/dist/quill.snow.css"
+import "quill/dist/quill.snow.css";
+import { ThemeContext } from "./context/ThemeContext";
 
 const App = () => {
   const { showRecruiterLogin } = useContext(AppContext);
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className={`${showRecruiterLogin && "h-screen overflow-hidden"}`}>
+    <div
+      className={`${showRecruiterLogin && "h-screen overflow-hidden"} ${
+        theme === "dark" ? "bg-[#090a15]" : "bg-cyan-50"
+      } transition-colors duration-500`}
+    >
       <Toaster
         toastOptions={{
           style: {

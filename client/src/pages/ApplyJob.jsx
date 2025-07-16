@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
@@ -43,27 +45,27 @@ const ApplyJob = () => {
           ease: "easeOut",
           delay: 0.2,
         }}
-        className="pt-20 md:pt-25 pb-10 text-white min-h-screen flex flex-col container px-4 max-w-7xl w-[90%] mx-auto"
+        className="pt-20 md:pt-25 pb-10 dark:text-white min-h-screen flex flex-col container px-4 max-w-7xl w-[90%] mx-auto"
       >
-        <div className="bg-white/5 rounded-2xl border border-gray-700 w-full mb-10">
+        <div className="dark:bg-white/5 bg-slate-200/20 rounded-2xl border border-gray-300 shadow-md dark:border-gray-700 w-full mb-10">
           <div className="flex justify-center md:justify-between flex-wrap gap-8 px-14 py-10 mb-6">
             {/* Company Logo and Job Title */}
-            <div className="flex flex-col md:flex-row items-center">
+            <div className="flex flex-col md:flex-row items-center transition-colors duration-500">
               <img
                 src={jobData.companyId.image}
                 alt="company"
-                className="h-24 bg-transparent rounded-2xl p-4 mr-4 max-md:mb-4 border border-gray-700"
+                className="h-24 bg-transparent rounded-2xl p-4 mr-4 max-md:mb-4 border border-gray-300 dark:border-gray-700"
               />
-              <div className="text-center md:text-left text-neutral-300">
+              <div className="text-center md:text-left dark:text-neutral-300">
                 <h1 className="text-2xl sm:text-4xl font-medium">
                   {jobData.title}
                 </h1>
-                <div className="flex flex-row flex-wrap max-md:justify-center gap-y-2 gap-6 items-center text-gray-400 mt-2">
+                <div className="flex flex-row flex-wrap max-md:justify-center gap-y-2 gap-6 items-center dark:text-gray-400 mt-2">
                   <span className="flex items-center gap-2">
                     <img
                       src={assets.suitcase_icon}
                       alt="suitcase"
-                      className="invert"
+                      className="dark:invert"
                     />
                     {jobData.companyId.name}
                   </span>
@@ -83,7 +85,7 @@ const ApplyJob = () => {
                     <img
                       src={assets.money_icon}
                       alt="salary"
-                      className="invert"
+                      className="dark:invert"
                     />
                     CTC: ${kconvert.convertTo(jobData.salary)}
                   </span>
@@ -92,10 +94,10 @@ const ApplyJob = () => {
             </div>
             {/* Apply Button and Posted Date */}
             <div className="flex flex-col justify-center text-end text-sm max-md:mx-auto max-md:text-center">
-              <button className="bg-blue-600 p-2.5 px-10 rounded-2xl cursor-pointer border border-blue-600 transition-all hover:bg-transparent">
+              <button className="bg-blue-600 text-white hover:text-black dark:hover:text-white p-2.5 px-10 rounded-2xl cursor-pointer border border-blue-600 transition-all hover:bg-transparent">
                 Apply Now
               </button>
-              <p className="mt-1 text-gray-500">
+              <p className="mt-1 dark:text-gray-500 text-gray-700">
                 Posted {moment(jobData.date).fromNow()}
               </p>
             </div>
@@ -109,7 +111,7 @@ const ApplyJob = () => {
               className="rich-text"
               dangerouslySetInnerHTML={{ __html: jobData.description }}
             ></div>
-            <button className="bg-blue-600 p-2.5 px-10 rounded-2xl cursor-pointer border border-blue-600 transition-all hover:bg-transparent text-sm">
+            <button className="bg-blue-600 p-2.5 px-10 rounded-2xl cursor-pointer text-white border border-blue-600 transition-all hover:bg-transparent hover:text-black dark:hover:text-white text-sm">
               Apply Now
             </button>
           </div>

@@ -5,7 +5,7 @@ import { assets } from "../assets/assets";
 const AppDownload = () => {
   return (
     <div className="container px-4 w-[90%] max-w-7xl mx-auto my-20">
-      <div className="relative bg-gradient-to-r from-gray-900 to-gray-950 p-12 sm:p-24 lg:p-32 rounded-xl border border-gray-700 text-white">
+      <div className="relative bg-gradient-to-r dark:from-gray-900 from-zinc-100 to-zinc-200 dark:to-gray-950 p-12 sm:p-24 lg:p-32 rounded-xl border dark:border-gray-700 border-gray-300 dark:text-white transition-colors duration-500">
         <div>
           <h1 className="text-2xl sm:text-4xl font-bold mb-8 max-w-md">
             Download Mobile App for Better Experience
