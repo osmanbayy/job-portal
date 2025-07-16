@@ -13,6 +13,7 @@ import ManageJobs from "./pages/admin_pages/ManageJobs";
 import ViewApplications from "./pages/admin_pages/ViewApplications";
 import "quill/dist/quill.snow.css";
 import { ThemeContext } from "./context/ThemeContext";
+import AboutUs from "./pages/AboutUs";
 
 const App = () => {
   const { showRecruiterLogin } = useContext(AppContext);
@@ -56,6 +57,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/apply-job/:id" element={<ApplyJob />} />
         <Route path="/applications" element={<Applications />} />
+        <Route path="/about" element={<AboutUs />} />
 
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="add-job" element={<AddJob />} />

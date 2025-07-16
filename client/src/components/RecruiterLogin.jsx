@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { motion } from "framer-motion";

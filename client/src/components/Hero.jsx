@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useRef } from "react";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const { setSearchFilter, setIsSearched } = useContext(AppContext);
@@ -17,7 +19,16 @@ const Hero = () => {
   };
 
   return (
-    <div className=" pt-20 dark:text-white container mx-auto w-[92%] max-w-7xl">
+    <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.6,
+          ease: "easeOut",
+          delay: 0.2,
+        }}
+      >
+    <div className="pt-20 dark:text-white container mx-auto w-[92%] max-w-7xl">
       <div className="transition-colors duration-500 bg-gradient-to-t dark:from-gray-900 from-zinc-200 to-zinc-300 dark:to-gray-950 py-16 text-center mx-2 rounded-xl border dark:border-gray-800 border-gray-300 px-3 sm:px-6 md:px-8 lg:px-10">
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium mb-4">
           Over 10,000+ Jobs to Apply!
@@ -80,6 +91,7 @@ const Hero = () => {
         </div>
       </div>
     </div>
+    </motion.div>
   );
 };
 
