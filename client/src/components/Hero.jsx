@@ -63,7 +63,7 @@ const Hero = () => {
           </div>
           <button
             onClick={handleSearch}
-            className="dark:bg-indigo-800 bg-blue-600 px-6 py-2 rounded-xl m-1 cursor-pointer text-white dark:hover:text-white hover:text-black border dark:border-indigo-800 hover:bg-transparent hover:border-gray-400 dark:hover:border-gray-800 transition-all"
+            className="dark:bg-indigo-800 bg-blue-600 px-6 py-2 rounded-xl m-1 cursor-pointer text-white dark:hover:text-white hover:text-black border border-blue-600 dark:border-indigo-800 hover:bg-transparent hover:border-gray-400 dark:hover:border-gray-800 transition-all"
           >
             Search
           </button>
@@ -72,7 +72,7 @@ const Hero = () => {
 
       {/* Companies Logos */}
       <div className="transition-colors duration-500 border border-gray-300 dark:border-gray-700 shadow-sm mx-2 mt-5 p-6 rounded-xl lg:rounded-full flex justify-center">
-        <div className="flex justify-center gap-10 lg:gap-16 flex-wrap">
+        <div className="flex justify-center gap-10 lg:gap-16 flex-wrap pointer-events-none select-none">
           <p className="font-medium">Trusted By:</p>
           <img src={assets.microsoft_logo} alt="microsoft" className="h-6" />
           <img src={assets.walmart_logo} alt="walmart" className="h-6" />

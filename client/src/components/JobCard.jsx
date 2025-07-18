@@ -42,10 +42,10 @@ const JobCard = ({ job }) => {
       <h4 className="font-medium text-xl mt-2">{job.title}</h4>
 
       <div className="flex items-center gap-3 dark:text-gray-100 mt-2 text-xs transition-colors duration-500">
-        <span className="bg-gradient-to-b dark:from-gray-800 from-gray-100 to-gray-200 dark:to-gray-950  px-4 py-1.5 border dark:border-gray-700 border-gray-400 rounded-full cursor-pointer transition dark:hover:from-gray-950 hover:from-gray-200 hover:to-gray-100 dark:hover:to-gray-800 hover:border-gray-500 hover:shadow">
+        <span className="bg-gradient-to-b dark:from-gray-800 from-gray-100 to-gray-300 dark:to-gray-950  px-4 py-1.5 border dark:border-gray-700 border-gray-400 rounded-full cursor-pointer transition dark:hover:from-gray-950 hover:from-gray-300 hover:to-gray-100 dark:hover:to-gray-800 hover:border-gray-500 hover:shadow">
           {job.location}
         </span>
-        <span className="bg-gradient-to-b dark:from-gray-800 from-gray-100 to:gray-200 dark:to-gray-950 px-4 py-1.5 border dark:border-gray-700 border-gray-400 rounded-full cursor-pointer transition dark:hover:from-gray-950 hover:from-gray-200 hover:to-gray-100 dark:hover:to-gray-800 hover:border-gray-500">
+        <span className="bg-gradient-to-b dark:from-gray-800 from-gray-100 to-gray-300 dark:to-gray-950 px-4 py-1.5 border dark:border-gray-700 border-gray-400 rounded-full cursor-pointer transition dark:hover:from-gray-950 hover:from-gray-300 hover:to-gray-100 dark:hover:to-gray-800 hover:border-gray-500">
           {job.level}
         </span>
       </div>
