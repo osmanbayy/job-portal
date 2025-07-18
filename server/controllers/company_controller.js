@@ -82,7 +82,13 @@ export const login_company = async (request, response) => {
 
 // Get company data
 export const get_company_data = async (request, response) => {
-
+  try {
+    const company = request.company;
+    response.json({ success: true, company });
+  } catch (error) {
+    console.log("Error in get_company_data controller");
+    response.json({ success: false, message: error.message })
+  }
 }
 
 // Post a new job
@@ -122,7 +128,15 @@ export const get_company_job_applicants = async (request, response) => {
 
 // Get company posted jobs
 export const get_company_posted_jobs = async (request, response) => {
+  try {
+    const companyId = request.company._id;
 
+    const jobs = await Job.find({ companyId });
+    response.json({ success: true, jobsData: jobs });
+  } catch (error) {
+    console.log("Error in get_company_posted_jobs controller");
+    response.json({ success: false, message: error.message })
+  }
 }
 
 // Change job application status
@@ -132,5 +146,20 @@ export const change_job_applications_status = async (request, response) => {
 
 // Change job visibility
 export const change_visibility = async (request, response) => {
+  try {
+    const { id } = request.body;
+    const companyId = request.company._id;
 
+    const job = await Job.findById(id);
+    if (companyId.toString() === job.companyId.toString()) {
+      job.visible = !job.visible;
+    }
+
+    await job.save();
+
+    response.json({ success: true, job })
+  } catch (error) {
+    console.log("Error in change_visibility controller");
+    response.json({ success: false, message: error.message })
+  }
 }
