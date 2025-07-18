@@ -26,7 +26,7 @@ const AboutUs = () => {
             <img
               src={assets.aboutUs2}
               alt="about us"
-              className="w-full h-[20rem] md:h-[40rem] rounded-lg object-cover"
+              className="w-full h-[20rem] md:h-[40rem] rounded-sm object-cover dark:brightness-50 transition-all duration-500"
             />
             <div>
               <h2 className="md:text-4xl text-3xl mt-5 font-serif">
