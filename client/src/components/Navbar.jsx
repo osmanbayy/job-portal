@@ -205,7 +205,7 @@ const Navbar = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -50 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute z-20 top-15 p-2 dark:bg-gray-900 bg-gray-200/50 backdrop-blur-xl right-0 rounded-xl flex flex-col gap-1"
+                      className="absolute z-20 top-15 p-2 dark:bg-gray-900 bg-gray-100 backdrop-blur-xl right-0 rounded-xl flex flex-col gap-1"
                       ref={loginDropdownRef}
                     >
                       <button

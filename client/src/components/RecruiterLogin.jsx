@@ -4,8 +4,13 @@ import { assets } from "../assets/assets";
 import { motion } from "framer-motion";
 import { Eye, EyeClosed } from "lucide-react";
 import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const RecruiterLogin = () => {
+  const navigate = useNavigate();
+
   const [state, setState] = useState("Login");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -16,13 +21,53 @@ const RecruiterLogin = () => {
   const [image, setImage] = useState(false);
 
   const [isTextDataSubmitted, setIsTextDataSubmitted] = useState(false);
-  const { setShowRecruiterLogin } = useContext(AppContext);
+  const { setShowRecruiterLogin, backendUrl, setCompanyToken, setCompanyData } = useContext(AppContext);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     if (state === "Sign Up" && !isTextDataSubmitted) {
-      setIsTextDataSubmitted(true);
+      return setIsTextDataSubmitted(true);
+    }
+
+    try {
+      if (state === "Login") {
+        const { data } = await axios.post(`${backendUrl}/api/company/login`, {
+          email,
+          password,
+        });
+
+        if(data.success) {
+          setCompanyData(data.company);
+          setCompanyToken(data.token);
+          localStorage.setItem("companyToken", data.token);
+          setShowRecruiterLogin(false);
+          navigate("/dashboard");
+          toast.success("Welcome!");
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("image", image);
+
+        const { data } = await axios.post(`${backendUrl}/api/company/register`, formData);
+        if(data.success) {
+          setCompanyData(data.company);
+          setCompanyToken(data.token);
+          localStorage.setItem("companyToken", data.token);
+          setShowRecruiterLogin(false);
+          navigate("/dashboard");
+          toast.success("Account created successfully!");
+        } else {
+          toast.error(data.message);
+        }
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
   return (
@@ -69,7 +114,11 @@ const RecruiterLogin = () => {
           <>
             {state !== "Login" && (
               <div className="border border-gray-400 dark:border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-                <img src={assets.person_icon} alt="person" className="size-4 invert dark:invert-0" />
+                <img
+                  src={assets.person_icon}
+                  alt="person"
+                  className="size-4 invert dark:invert-0"
+                />
                 <input
                   type="text"
                   value={name}
@@ -82,7 +131,11 @@ const RecruiterLogin = () => {
             )}
 
             <div className="border border-gray-400 dark:border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-              <img src={assets.email_icon} alt="email" className="size-4 invert dark:invert-0" />
+              <img
+                src={assets.email_icon}
+                alt="email"
+                className="size-4 invert dark:invert-0"
+              />
               <input
                 type="email"
                 value={email}
@@ -93,7 +146,11 @@ const RecruiterLogin = () => {
               />
             </div>
             <div className="relative border border-gray-400 dark:border-gray-600 px-4 py-2 flex items-center gap-2 rounded-full mt-5">
-              <img src={assets.lock_icon} alt="lock" className="size-4 dark:invert-0" />
+              <img
+                src={assets.lock_icon}
+                alt="lock"
+                className="size-4 dark:invert-0"
+              />
               <div className="">
                 <input
                   type={showPassword ? "text" : "password"}
