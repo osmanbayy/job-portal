@@ -16,7 +16,7 @@ import { ThemeContext } from "./context/ThemeContext";
 import AboutUs from "./pages/AboutUs";
 
 const App = () => {
-  const { showRecruiterLogin } = useContext(AppContext);
+  const { showRecruiterLogin, companyToken } = useContext(AppContext);
   const { theme } = useContext(ThemeContext);
   return (
     <div
@@ -60,9 +60,13 @@ const App = () => {
         <Route path="/about" element={<AboutUs />} />
 
         <Route path="/dashboard" element={<Dashboard />}>
-          <Route path="add-job" element={<AddJob />} />
-          <Route path="manage-jobs" element={<ManageJobs />} />
-          <Route path="view-applications" element={<ViewApplications />} />
+          {companyToken ? (
+            <>
+              <Route path="add-job" element={<AddJob />} />
+              <Route path="manage-jobs" element={<ManageJobs />} />
+              <Route path="view-applications" element={<ViewApplications />} />
+            </>
+          ) : null}
         </Route>
       </Routes>
     </div>

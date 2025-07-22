@@ -159,27 +159,48 @@ body {
   -moz-appearance: textfield; /* Firefox */
 }
 
-/* Quill text editor customization */
+/* Varsayılan (light) tema */
 .ql-toolbar {
-    border: 2px solid #364153 !important;
-    border-radius: 5px;
-    color: #fff !important;
+  border: 2px solid #e2e8f0 !important; /* light border */
+  border-radius: 5px;
+  color: #000 !important;
 }
 
 .ql-picker {
-    color: white !important;
-    &:hover {
-        color: #ddd !important;
-    }
+  color: #000 !important;
+}
+.ql-picker:hover {
+  color: #333 !important;
 }
 
 .ql-stroke {
-    stroke: #fff !important;
+  stroke: #000 !important;
 }
 
 .ql-container.ql-snow {
-    border: 2px solid #364153 !important;
-    border-top: 0px !important;
-    border-bottom-right-radius: 5px !important;
-    border-bottom-left-radius: 5px !important;
+  border: 2px solid #e2e8f0 !important;
+  border-top: 0 !important;
+  border-bottom-right-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
+}
+
+.dark .ql-toolbar {
+  border: 2px solid #364153 !important;
+  color: #fff !important;
+}
+
+.dark .ql-picker {
+  color: #fff !important;
+}
+.dark .ql-picker:hover {
+  color: #ddd !important;
+}
+
+.dark .ql-stroke {
+  stroke: #fff !important;
+}
+
+.dark .ql-container.ql-snow {
+  border: 2px solid #364153 !important;
+  border-top: 0 !important;
 }
