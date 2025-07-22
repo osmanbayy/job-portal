@@ -96,7 +96,7 @@ export const post_job = async (request, response) => {
   const { title, description, location, salary, level, category } = request.body;
   const company_id = request.company._id;
 
-  if (!title || !description || !location || salary || !level) {
+  if (!title || !description || !location || !salary || !level || !category) {
     return response.json({ success: false, message: "All Fields Required!" });
   }
 
@@ -114,7 +114,7 @@ export const post_job = async (request, response) => {
 
     await new_job.save();
 
-    response.json({ success: true, new_job });
+    return response.json({ success: true, new_job, message: "Job posted successfully!" });
   } catch (error) {
     console.log("Error in post_job controller");
     response.json({ success: false, message: error.message });
