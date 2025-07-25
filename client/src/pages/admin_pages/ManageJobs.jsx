@@ -1,12 +1,63 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { manageJobsData } from "../../assets/assets";
+import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { AppContext } from "../../context/AppContext";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const ManageJobs = () => {
   const navigate = useNavigate();
+  const [jobs, setJobs] = useState([]);
+
+  const { backendUrl, companyToken } = useContext(AppContext);
+
+  // Function to fecth company jobs applications data
+  const fetchCompanyJobs = async () => {
+    try {
+      const { data } = await axios.get(`${backendUrl}/api/company/list-jobs`, {
+        headers: { token: companyToken },
+      });
+      if (data.success) {
+        setJobs(data.jobsData.reverse());
+        console.log(data.jobsData);
+      } else {
+        toast.error(data.message || "Failed to fetch jobs data");
+      }
+    } catch (error) {
+      toast.error(data.message || error.message);
+    }
+  };
+
+  // Function to change job visibility
+  const changeJobVisibility = async (jobId) => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/company/change-visibility`,
+        { id: jobId },
+        {
+          headers: { token: companyToken },
+        }
+      );
+      if (data.success) {
+        toast.success("Job visibility changed successfully!");
+        fetchCompanyJobs();
+      } else {
+        toast.error(data.message || "Failed to change job visibility");
+      }
+    } catch (error) {
+      toast.error(error.message || "Failed to change job visibility");
+    }
+  };
+
+  useEffect(() => {
+    if (companyToken) {
+      fetchCompanyJobs();
+    }
+  }, [companyToken]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -43,7 +94,7 @@ const ManageJobs = () => {
             </tr>
           </thead>
           <tbody>
-            {manageJobsData.map((job, index) => (
+            {jobs.map((job, index) => (
               <tr key={index} className="dark:text-gray-300 text-gray-800">
                 <td className="py-2 px-4 border-b border-gray-400 dark:border-gray-700 max-sm:hidden">
                   {index + 1}
@@ -57,11 +108,16 @@ const ManageJobs = () => {
                 <td className="py-2 px-4 border-b border-gray-400 dark:border-gray-700 max-sm:hidden">
                   {job.location}
                 </td>
-                <td className="py-2 px-4 border-b border-gray-400 dark:border-gray-700">
+                <td className="py-2 px-4 border-b border-gray-400 dark:border-gray-700 text-center">
                   {job.applicants}
                 </td>
                 <td className="py-2 px-4 border-b border-gray-400 dark:border-gray-700">
-                  <input type="checkbox" className="scale-105 ml-4" />
+                  <input
+                    type="checkbox"
+                    className="scale-105 ml-4"
+                    onChange={() => changeJobVisibility(job._id)}
+                    checked={job.visible}
+                  />
                 </td>
               </tr>
             ))}

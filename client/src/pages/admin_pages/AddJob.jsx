@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
-import { data } from "react-router-dom";
 
 const AddJob = () => {
   const [title, setTitle] = useState("");

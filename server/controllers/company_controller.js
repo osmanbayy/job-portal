@@ -3,6 +3,7 @@ import Job from "../models/Job.js"
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import generate_token from "../utils/generate_token.js";
+import JobApplication from "../models/JobApplication.js";
 
 // Register a new company
 export const register_company = async (request, response) => {
@@ -132,7 +133,14 @@ export const get_company_posted_jobs = async (request, response) => {
     const companyId = request.company._id;
 
     const jobs = await Job.find({ companyId });
-    response.json({ success: true, jobsData: jobs });
+
+    const jobsData = await Promise.all(
+      jobs.map(async (job) => {
+        const applicants = await JobApplication.find({ jobId: job._id });
+        return { ...job.toObject(), applicants: applicants.length };
+      }));
+
+    response.json({ success: true, jobsData });
   } catch (error) {
     console.log("Error in get_company_posted_jobs controller");
     response.json({ success: false, message: error.message })
