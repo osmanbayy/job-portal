@@ -1,5 +1,6 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { Facebook, Instagram, LinkedinIcon } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -7,24 +8,15 @@ const Footer = () => {
       <img src={assets.logo} alt="logo" width={160} className="dark:invert" />
       <p className="flex-1 border-l dark:border-gray-600 border-gray-300 pl-4 text-sm dark:text-gray-300 text-black/60 max-sm:hidden">Copyright @insiderjobs | All Rights Reserved.</p>
       <div className="flex gap-2">
-        <img
-          src={assets.facebook_icon}
-          alt="facebook"
-          className="dark:invert transition-all hover:scale-105 cursor-pointer hover:bg-blue-500 dark:hover:bg-amber-400 rounded-full"
-          width={38}
-        />
-        <img
-          src={assets.twitter_icon}
-          alt="twitter"
-          className="dark:invert transition-all hover:scale-105 cursor-pointer hover:bg-blue-500 dark:hover:bg-amber-400 rounded-full"
-          width={38}
-        />
-        <img
-          src={assets.instagram_icon}
-          alt="insragram"
-          className="dark:invert transition-all hover:scale-105 cursor-pointer hover:bg-blue-500 dark:hover:bg-amber-400 rounded-full"
-          width={38}
-        />
+        <div className="flex items-center justify-center bg-gray-200 dark:bg-gray-800 rounded-full p-2 cursor-pointer transition-all hover:scale-105">
+          <Facebook className="size-4 md:size-5" />
+        </div>
+        <div className="flex items-center justify-center bg-gray-200 dark:bg-gray-800 rounded-full p-2 cursor-pointer transition-all hover:scale-105">
+          <Instagram  className="size-4 md:size-5"/>
+        </div>
+        <div className="flex items-center justify-center bg-gray-200 dark:bg-gray-800 rounded-full p-2 cursor-pointer transition-all hover:scale-105">
+          <LinkedinIcon  className="size-4 md:size-5"/>
+        </div>
       </div>
     </div>
   );

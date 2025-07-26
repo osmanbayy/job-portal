@@ -13,7 +13,7 @@ export const get_user_data = async (request, response) => {
       return response.json({ success: false, message: "User not found" });
     }
 
-    response.json({ success: true, user });
+    return response.json({ success: true, user });
   } catch (error) {
     console.error("Error in get_user_data controller");
     response.status(500).json({ success: false, message: error.message });

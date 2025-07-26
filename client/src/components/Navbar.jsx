@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { assets } from "../assets/assets";
 import {
   Bell,
+  Bookmark,
   ChevronDown,
   LogIn,
   Menu,
@@ -75,13 +76,13 @@ const Navbar = () => {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [mobileMenuOpen]);
 
@@ -109,7 +110,7 @@ const Navbar = () => {
       <div className="">
         <button
           onClick={toggleTheme}
-          className="p-2 cursor-pointer bg-gray-200/50 dark:bg-gray-900 rounded-full dark:hover:bg-gray-800 hover:bg-gray-300 transition"
+          className="p-2 cursor-pointer bg-gray-200/50 dark:bg-gray-900 rounded-full dark:hover:bg-gray-800 hover:bg-gray-300 transition text-black dark:text-white"
         >
           {theme === "dark" ? (
             <Sun className="size-4 sm:size-5" />
@@ -125,11 +126,11 @@ const Navbar = () => {
     <>
       <div className="navbar relative backdrop-blur-lg">
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-2 md:gap-5">
             {/* Hamburger Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 cursor-pointer bg-gray-200/50 dark:bg-gray-900 rounded-full dark:hover:bg-gray-800 hover:bg-gray-300 transition"
+              className="lg:hidden p-2 cursor-pointer bg-transparent rounded-full dark:hover:bg-gray-800 hover:bg-gray-200 transition"
             >
               <Menu className="size-5 dark:text-white" />
             </button>
@@ -169,14 +170,16 @@ const Navbar = () => {
                         <SearchIcon className="size-4 sm:size-5" /> Find Work
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        to="/all-jobs"
-                        className="flex items-center gap-3 px-3 py-2 text-sm dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                      >
-                        <SearchIcon className="size-4 sm:size-5" /> Saved Works
-                      </Link>
-                    </li>
+                    {user && (
+                      <li>
+                        <Link
+                          to="/all-jobs"
+                          className="flex items-center gap-3 px-3 py-2 text-sm dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                        >
+                          <Bookmark className="size-4 sm:size-5" /> Saved Works
+                        </Link>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -187,12 +190,14 @@ const Navbar = () => {
               >
                 About Us
               </Link>
-              <Link
-                to="/contact"
-                className="hidden sm:inline-block text-sm sm:text-base hover:text-black/70 dark:hover:text-gray-400 transition-colors"
-              >
-                Messages
-              </Link>
+              {user && (
+                <Link
+                  to="/contact"
+                  className="hidden sm:inline-block text-sm sm:text-base hover:text-black/70 dark:hover:text-gray-400 transition-colors"
+                >
+                  Messages
+                </Link>
+              )}
             </div>
           </div>
 
@@ -206,16 +211,18 @@ const Navbar = () => {
                   </button>
                 </div>
 
-                <UserDropdown 
-                  user={user} 
-                  openUserProfile={openUserProfile} 
-                  signOut={signOut} 
+                <UserDropdown
+                  user={user}
+                  openUserProfile={openUserProfile}
+                  signOut={signOut}
                 />
 
                 <p className="invisible md:visible hidden md:flex">|</p>
                 <div className="flex flex-col">
                   <p className="max-sm:hidden">Hi! {user.firstName}</p>
-                  <p className="max-sm:hidden text-sm -mt-1 text-gray-500">$0</p>
+                  <p className="max-sm:hidden text-sm -mt-1 text-gray-500">
+                    $0
+                  </p>
                 </div>
               </div>
             ) : (
@@ -289,7 +296,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu Component */}
-      <MobileMenu 
+      <MobileMenu
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
         user={user}

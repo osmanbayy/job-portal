@@ -39,7 +39,8 @@ export const AppContextProvider = (props) => {
         toast.error(data.message || "Failed to fetch jobs");
       }
     } catch (error) {
-      toast.error(error.message || "Failed to fetch jobs");
+      const errorMessage = error.response?.data?.message || error.message || "Failed to fetch jobs";
+      toast.error(errorMessage);
     }
   };
 
@@ -52,15 +53,18 @@ export const AppContextProvider = (props) => {
       if (data.success) {
         setCompanyData(data.company);
       } else {
-        toast.error(data.message);
+        toast.error(data.message || "Failed to fetch company data");
       }
     } catch (error) {
-      toast.error(error.message);
+      const errorMessage = error.response?.data?.message || error.message || "Failed to fetch company data";
+      toast.error(errorMessage);
     }
   };
 
   // Function to fetch user data
   const fetchUserData = async () => {
+    if (!user) return;
+    
     try {
       const token = await getToken();
       const { data } = await axios.get(`${backendUrl}/api/users/user`, {
@@ -68,15 +72,56 @@ export const AppContextProvider = (props) => {
       });
       if (data.success) {
         setUserData(data.user);
-        setUserApplications(data.applications);
+        // setUserApplications(data.applications);
       } else {
-        toast.error(data.message || "Failed to fetch user data");
+        // Don't show error toast for "User not found" - this is expected for new Google users
+        if (data.message && data.message.toLowerCase().includes("user not found")) {
+          console.log("User not found in backend - this is normal for new Google users");
+          // Optionally create user here if needed
+          await createUser();
+        } else {
+          toast.error(data.message || "Failed to fetch user data");
+        }
       }
     } catch (error) {
-      toast.error(error.message || "Failed to fetch user data");
+      const errorMessage = error.response?.data?.message || error.message || "Failed to fetch user data";
+      
+      if (errorMessage.toLowerCase().includes("user not found")) {
+        // Optionally create user here if needed
+        await createUser();
+      } else {
+        toast.error(errorMessage);
+      }
     }
   };
 
+  // Function to create user in backend (optional)
+  const createUser = async () => {
+    if (!user) return;
+    
+    try {
+      const token = await getToken();
+      const userData = {
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.emailAddresses[0]?.emailAddress,
+        clerkId: user.id,
+        imageUrl: user.imageUrl,
+      };
+      
+      const { data } = await axios.post(`${backendUrl}/api/users/create`, userData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      if (data.success) {
+        setUserData(data.user);
+        console.log("User created successfully in backend");
+      }
+    } catch (error) {
+      console.error("Failed to create user in backend:", error);
+    }
+  };
+
+  // Initial setup effect
   useEffect(() => {
     fetchJobs();
 
@@ -86,15 +131,21 @@ export const AppContextProvider = (props) => {
     }
   }, []);
 
+  // Fetch company data when companyToken changes
   useEffect(() => {
     if (companyToken) {
       fetchCompanyData();
     }
   }, [companyToken]);
 
+  // Fetch user data when user changes
   useEffect(() => {
     if (user) {
       fetchUserData();
+    } else {
+      // Clear user data when user logs out
+      setUserData(null);
+      setUserApplications([]);
     }
   }, [user]);
 
@@ -116,6 +167,9 @@ export const AppContextProvider = (props) => {
     setUserData,
     userApplications,
     setUserApplications,
+    fetchJobs,
+    fetchUserData,
+    createUser,
   };
 
   return (

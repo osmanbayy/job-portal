@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
-import { EllipsisVertical, Heart } from "lucide-react";
+import { Bookmark, EllipsisVertical, Heart } from "lucide-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
+import { AppContext } from "../context/AppContext";
 
 const JobCard = ({ job }) => {
   const [addFavorite, setAddFavorite] = useState(false);
+  const { user } = useUser();
+  const { setShowRecruiterLogin } = useContext(AppContext);
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation()
-    setAddFavorite((prev) => !prev);
-    if (!addFavorite) {
-      toast.success("Job added to favorites!");
+    if(user) {
+      setAddFavorite(!addFavorite);
+      toast.success(
+        addFavorite ? "Job removed from bookmarkeds!" : "Job added to bookmarked!"
+      );
     } else {
-      toast.success("Job removed from favorites!");
+      setShowRecruiterLogin(true);
+      toast.success("Please log in or sign up to add jobs to your favorites.");
     }
+    // if (!addFavorite) {
+    //   toast.success("Job added to bookmarked!");
+    // } else {
+    //   toast.success("Job removed from favorites!");
+    // }
   };
 
   const navigate = useNavigate();
@@ -29,10 +41,10 @@ const JobCard = ({ job }) => {
       <div className="flex justify-between items-center">
         <img src={job.image || assets.company_icon} alt="company" className="size-8" />
         <div className="flex items-center gap-2">
-          <Heart
+          <Bookmark
             onClick={handleFavoriteClick}
             className={`size-6 cursor-pointer transition-all ${
-              addFavorite && "fill-red-500 text-red-500"
+              addFavorite && "fill-blue-600 text-blue-600"
             }`}
           />
           <EllipsisVertical className="size-6 cursor-pointer" />

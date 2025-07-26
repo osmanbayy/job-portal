@@ -67,9 +67,13 @@ const AboutUs = () => {
             </div>
 
             <div className="flex items-center justify-center lg:justify-start">
-              <button onClick={() => navigate("/")} className="flex items-center gap-2 group mt-5 px-4 py-2 border dark:border-gray-700 border-gray-300 rounded-lg transition-all duration-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-900">
-              <MoveLeft className="group-hover:mr-1 transition-all duration-200" /> Go Back to Explore Jobs
-            </button>
+              <button
+                onClick={() => navigate("/")}
+                className="flex items-center gap-2 group mt-5 px-4 py-2 border dark:border-gray-700 border-gray-300 rounded-lg transition-all duration-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <MoveLeft className="group-hover:mr-1 transition-all duration-200" />{" "}
+                Go Back to Explore Jobs
+              </button>
             </div>
           </div>
         </div>
