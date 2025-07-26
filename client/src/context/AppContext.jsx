@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from "react";
-import { jobsData } from "../assets/assets";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -26,7 +25,16 @@ export const AppContextProvider = (props) => {
 
   // Function to fetch jobs
   const fetchJobs = async () => {
-    setJobs(jobsData);
+    try {
+      const { data } = await axios.get(`${backendUrl}/api/jobs`);
+      if (data.success) {
+        setJobs(data.jobs);
+      } else {
+        toast.error(data.message || "Failed to fetch jobs");
+      }
+    } catch (error) {
+      toast.error(error.message || "Failed to fetch jobs");
+    }
   };
 
   // Function to fetch company data
