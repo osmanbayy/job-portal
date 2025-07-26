@@ -184,6 +184,18 @@ body {
   border-bottom-left-radius: 5px !important;
 }
 
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+    background-color: #f7fafc !important; /* light background */
+    color: #000 !important;
+}
+
+.dark .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  border: 2px solid #364153 !important; /* dark border */
+    background-color: #1a202c !important; /* dark background */
+  border-radius: 5px;
+  color: #fff !important;
+}
+
 .dark .ql-toolbar {
   border: 2px solid #364153 !important;
   color: #fff !important;

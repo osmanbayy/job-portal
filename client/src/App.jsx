@@ -59,15 +59,15 @@ const App = () => {
         <Route path="/applications" element={<Applications />} />
         <Route path="/about" element={<AboutUs />} />
 
-        <Route path="/dashboard" element={<Dashboard />}>
-          {companyToken ? (
+        {companyToken ? (
+          <Route path="/dashboard" element={<Dashboard />}>
             <>
               <Route path="add-job" element={<AddJob />} />
               <Route path="manage-jobs" element={<ManageJobs />} />
               <Route path="view-applications" element={<ViewApplications />} />
             </>
-          ) : null}
-        </Route>
+          </Route>
+        ) : null}
       </Routes>
     </div>
   );

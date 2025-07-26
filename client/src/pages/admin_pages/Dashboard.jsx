@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -6,13 +7,28 @@ import { LogOut, Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AppContext } from "../../context/AppContext";
 import { ThemeContext } from "../../context/ThemeContext";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { companyData } = useContext(AppContext);
+  const { companyData, setCompanyData, setCompanyToken } = useContext(AppContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
+
+  // Function to handle logout
+  const handleLogout = () => {
+    setCompanyToken(null);
+    localStorage.removeItem("companyToken");
+    setCompanyData(null);
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (companyData) {
+      navigate("/dashboard/manage-jobs");
+    }
+  }, [companyData]);
 
   return (
     <div className="min-h-screen dark:text-white">
@@ -73,7 +89,7 @@ const Dashboard = () => {
                         onMouseLeave={() => setIsDropdownOpen(false)}
                       >
                         <ul className="w-32 list-none m-0 p-0 bg-gray-900 rounded-md border border-gray-700 text-sm">
-                          <li className="flex items-center gap-2 py-3 px-4 cursor-pointer pr-10 transition hover:bg-gray-700 rounded-md">
+                          <li onClick={handleLogout} className="flex items-center gap-2 py-3 px-4 cursor-pointer pr-10 transition hover:bg-gray-700 rounded-md">
                             Logout <LogOut className="size-3" />
                           </li>
                         </ul>
