@@ -3,8 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  Bell,
   BriefcaseBusiness,
   ChevronDown,
+  Mail,
   Settings,
   User2Icon,
   UserRoundCheck,
@@ -38,15 +40,15 @@ const UserDropdown = ({ user, openUserProfile, signOut }) => {
     <div className="relative" ref={userDropdownRef}>
       <button
         onClick={() => setUserDropdownOpen((prev) => !prev)}
-        className="flex items-center gap-2 p-1 rounded-full hover:bg-gray-200/50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+        className="flex items-center gap-2 rounded-full hover:bg-gray-200/50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
       >
         <img
           src={user.imageUrl || assets.profile_img}
           alt="Profile"
-          className="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600"
+          className="size-8 sm:size-9 rounded-full border-2 border-gray-300 dark:border-gray-600"
         />
         <ChevronDown
-          className={`size-4 transition-transform duration-200 ${
+          className={`size-4 hidden sm:flex transition-transform duration-200 ${
             userDropdownOpen ? "rotate-180" : ""
           }`}
         />
@@ -91,11 +93,28 @@ const UserDropdown = ({ user, openUserProfile, signOut }) => {
 
             <Link
               to="/settings"
-              className="flex items-center gap-3 px-3 py-2 text-sm dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-lg transition-colors"
+              className="hidden lg:flex items-center gap-3 px-3 py-2 text-sm dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-lg transition-colors"
               onClick={() => setUserDropdownOpen(false)}
             >
               <Settings className="size-4 sm:size-5" />
               Settings
+            </Link>
+
+            <Link
+              to="/notifications"
+              className="sm:hidden flex items-center gap-3 px-3 py-2 text-sm dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-lg transition-colors"
+              onClick={() => setUserDropdownOpen(false)}
+            >
+              <Bell className="size-4 sm:size-5" />
+              Notifications
+            </Link>
+
+            <Link
+              to="/messages"
+              className="flex items-center gap-3 px-3 py-2 text-sm dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            >
+              <Mail className="size-4 sm:size-5" />
+              Messages
             </Link>
 
             <button

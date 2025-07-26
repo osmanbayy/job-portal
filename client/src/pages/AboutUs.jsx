@@ -21,7 +21,7 @@ const AboutUs = () => {
         }}
         className="pt-20 md:pt-25 pb-10 dark:text-white min-h-screen flex flex-col container px-4 max-w-7xl w-[90%] mx-auto"
       >
-        <div className="flex md:flex-row flex-col items-center justify-between gap-15 w-full h-full px-5">
+        <div className="flex lg:flex-row flex-col items-center justify-between text-center lg:text-left gap-15 w-full h-full px-5">
           <div className="">
             <img
               src={assets.aboutUs2}
@@ -66,9 +66,11 @@ const AboutUs = () => {
               <p>Let’s build the future of work, together.</p>
             </div>
 
-            <button onClick={() => navigate("/")} className="flex items-center gap-2 group mt-5 px-4 py-2 border dark:border-gray-700 border-gray-300 rounded-lg transition-all duration-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-900">
+            <div className="flex items-center justify-center lg:justify-start">
+              <button onClick={() => navigate("/")} className="flex items-center gap-2 group mt-5 px-4 py-2 border dark:border-gray-700 border-gray-300 rounded-lg transition-all duration-200 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-900">
               <MoveLeft className="group-hover:mr-1 transition-all duration-200" /> Go Back to Explore Jobs
             </button>
+            </div>
           </div>
         </div>
       </motion.div>
