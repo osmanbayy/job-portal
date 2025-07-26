@@ -10,15 +10,16 @@ import {
   ShieldCheck,
   Sun,
 } from "lucide-react";
-import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
+import { useClerk, useUser } from "@clerk/clerk-react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { AnimatePresence, motion } from "framer-motion";
+import UserDropdown from "./UserDropdown";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { openSignIn } = useClerk();
+  const { openSignIn, openUserProfile, signOut } = useClerk();
   const { user } = useUser();
 
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -178,7 +179,12 @@ const Navbar = () => {
                 </button>
               </div>
 
-              <UserButton />
+              <UserDropdown 
+                user={user} 
+                openUserProfile={openUserProfile} 
+                signOut={signOut} 
+              />
+
               <p className="invisible md:visible hidden md:flex">|</p>
               <div className="flex flex-col">
                 <p className="max-sm:hidden">Hi! {user.firstName}</p>

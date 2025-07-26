@@ -22,7 +22,7 @@ body {
 }
 
 .dropdown-menu {
-    @apply absolute left-0 top-full mt-2 w-52 font-normal dark:bg-gray-950 bg-gray-200 border border-gray-300 dark:border-gray-700 rounded-xl shadow opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-40
+    @apply absolute left-0 top-8 mt-2 w-52 font-normal dark:bg-gray-950 bg-gray-200 border border-gray-300 dark:border-gray-700 rounded-xl shadow opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-40
 }
 
 .navbar-recruiter-login-btn {
