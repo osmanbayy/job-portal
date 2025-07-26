@@ -27,7 +27,7 @@ const JobCard = ({ job }) => {
       className="border bg-gradient-to-l dark:from-gray-800 from-zinc-100/30 to-zinc-200/30 dark:to-gray-950 border-transparent shadow-xs dark:shadow-indigo-900 shadow-gray-700 hover:shadow-sm rounded-3xl p-6 transition-colors duration-500 hover:border-blue-500 dark:hover:border-gray-400 cursor-pointer"
     >
       <div className="flex justify-between items-center">
-        <img src={assets.company_icon} alt="company" className="size-8" />
+        <img src={job.image || assets.company_icon} alt="company" className="size-8" />
         <div className="flex items-center gap-2">
           <Heart
             onClick={handleFavoriteClick}

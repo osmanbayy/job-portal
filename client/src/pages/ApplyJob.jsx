@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { data, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
@@ -10,27 +10,34 @@ import kconvert from "k-convert";
 import moment from "moment";
 import { motion } from "framer-motion";
 import JobCard from "../components/JobCard";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const ApplyJob = () => {
   const { id } = useParams();
 
   const [jobData, setJobData] = useState(null);
 
-  const { jobs } = useContext(AppContext);
+  const { jobs, backendUrl } = useContext(AppContext);
 
   const fetchJobs = async () => {
-    const data = jobs.filter((job) => job._id === id);
-    if (data.length !== 0) {
-      setJobData(data[0]);
-      console.log(data[0]);
+    try {
+      const { data } = await axios.get(`${backendUrl}/api/jobs/${id}`);
+      if (data.success) {
+        setJobData(data.job);
+      } else {
+        toast.error(data.message || "Failed to fetch job data");
+        console.error("Error fetching job data:", data.message);
+      }
+    } catch (error) {
+      toast.error(data.message || "An error occurred while fetching job data");
+      console.error("Error fetching job data:", error.message);
     }
   };
 
   useEffect(() => {
-    if (jobs.length > 0) {
-      fetchJobs();
-    }
+    fetchJobs();
   }, [id, jobs]);
 
   return jobData ? (
